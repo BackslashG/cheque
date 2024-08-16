@@ -1,3 +1,4 @@
+> star the repository! ⭐
 # CHEQUE
 A simple Discord token checker.
 

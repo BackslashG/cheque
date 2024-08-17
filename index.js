@@ -1,4 +1,4 @@
-// CHEQUE
+// CHEQUE v1.2.0
 import chalk from "chalk"; // styling
 import axios from "axios"; // web requests
 import readlineSync from "readline-sync"; // ask for token
@@ -20,8 +20,7 @@ const FLAG_DEFINITIONS = {
   65536: "VERIFIED_BOT (Verified Bot)",
   131072: "VERIFIED_DEVELOPER (Early Verified Bot Developer)",
   262144: "CERTIFIED_MODERATOR (Moderator Programs Alumni)",
-  524288:
-    "BOT_HTTP_INTERACTIONS (idek how u got this)",
+  524288: "BOT_HTTP_INTERACTIONS (idek how u got this)",
   4194304: "ACTIVE_DEVELOPER (User is an Active Developer)",
 };
 
@@ -114,10 +113,12 @@ async function getUserData() {
           ? "Yes (Nitro Basic)"
           : "???")
     );
-    console.log(
-      chalk.hex("#f28c66")("| Clan ") +
-        (clan !== null ? clan : chalk.gray("Nope"))
-    );
+    const ctag = clan && clan.tag ? clan.tag : chalk.gray("Nope");
+    const cid = clan && clan.identity_guild_id ? clan.identity_guild_id : null;
+    const cfinal = clan
+      ? `${ctag} ${cid ? chalk.gray(`(${cid})`) : ""}`
+      : chalk.gray("Nope");
+    console.log(chalk.hex("#f28c66")("| Clan ") + cfinal);
     const decodedFlags = decodeFlags(flags);
     console.log(chalk.hex("#f28c66")("| Flags ") + decodedFlags.join(", "));
     console.log("");
@@ -178,7 +179,7 @@ async function getUserData() {
       } else {
         console.log(
           chalk.hex("#f28c66")(
-            "Code to login with the token has been copied to your clipboard"
+            "Code to login with the token has been copied to your clipboard",
           )
         );
       }
@@ -191,5 +192,9 @@ async function getUserData() {
     }
   }
 }
-
-getUserData();
+await getUserData();
+console.log(
+  chalk.hex("#ff4400")(
+    "Account info fetched by Cheque - github.com/BackslashG/CHEQUE", // shameless self promo
+  )
+);
